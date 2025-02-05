@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="registrationPage.css" />
+  </head>
+  <body>
+    <div class="registration-container">
+      <h1>Register</h1>
+      <form id="callForm">
+        <div class="input-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="input-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+          />
+        </div>
+        <input type="submit" class="register-btn" value="Register" />
+      </form>
+      <div class="login-link">
+        Already have an account? <a href="loginPage.html">Login here</a>
+      </div>
+    </div>
+
+    <script>
+        //*** without checking user already existing or not in System ***
+      // function saveDataInLocalStorage(event) {
+      //     event.preventDefault(); // Prevent form from submitting normally
+
+      //     const name = document.getElementById("name").value;
+      //     const email = document.getElementById("email").value;
+      //     const password = document.getElementById("password").value;
+      //     const confirmPassword = document.getElementById("confirmPassword").value;
+
+      //     if (password === confirmPassword) {
+      //         const user = {
+      //             name: name,
+      //             email: email,
+      //             password: password
+      //         };
+
+      //         localStorage.setItem("user", JSON.stringify(user));
+      //         alert("Registration Successful! Redirecting to login page...");
+      //         window.location.href = "loginPage.html"; // Redirect to login page
+      //     } else {
+      //         alert("Passwords do not match!");
+      //     }
+      // }
+      // document.getElementById("callForm").addEventListener("submit", saveDataInLocalStorage);
+
+
+      
+    //***   checking user already existing or not in system ***
+      function saveDataInLocalStorage(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+
+        if (password != confirmPassword) {
+          alert("Passwords do not match!");
+          return false;
+        }
+
+        const existingUser = JSON.parse(localStorage.getItem("user")) || [];
+        const isPresent = existingUser.find( user => user.email === email);
+      //  const emailExistingOrNot = existingUser.forEach(eachUser => {
+      //       if (eachUser && eachUser.email === email) {
+      //         return false;
+      //       }
+      //   });
+
+        if(isPresent){
+            alert("Email already exists!");
+            window.location.href = "loginPage.html";
+        }else{
+
+        const user = {
+          name: name,
+          email: email,
+          password: password
+        };
+        existingUser.push(user);
+        localStorage.setItem("user", JSON.stringify(existingUser));
+        alert("Registration Successful! Redirecting to login page...");
+        window.location.href = "loginPage.html";
+      }
+      }
+      document.getElementById("callForm").addEventListener("submit", saveDataInLocalStorage);
+    </script>
+  </body>
+</html>
