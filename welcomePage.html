@@ -29,7 +29,7 @@
 
         // Logout function
         document.querySelector(".logout-btn").addEventListener("click", () => {
-            // localStorage.removeItem("user");
+            localStorage.removeItem("loggedInUser");
             alert("Logged out successfully!");
             window.location.href = "loginPage.html";
         });
